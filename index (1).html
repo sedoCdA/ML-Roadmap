@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Machine Learning Roadmap — Complete Process Map</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #e8e8f0;
+    --text2: #9090a8;
+    --text3: #5a5a72;
+    --purple: #7c6bf5;
+    --purple-dim: rgba(124,107,245,0.15);
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.12);
+    --amber: #f59e0b;
+    --amber-dim: rgba(245,158,11,0.12);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.1);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,0.1);
+    --blue: #60a5fa;
+    --blue-dim: rgba(96,165,250,0.1);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.1);
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* Background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(124,107,245,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,107,245,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 64px;
+    text-align: center;
+  }
+
+  .header-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--purple);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #e8e8f0 0%, #9090a8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header p {
+    color: var(--text2);
+    font-size: 16px;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--purple), var(--teal));
+    width: 0%;
+    z-index: 1000;
+    transition: width 0.1s;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 28px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, var(--purple) 0%, var(--teal) 50%, var(--amber) 100%);
+    opacity: 0.3;
+  }
+
+  /* Phase */
+  .phase {
+    margin-bottom: 32px;
+    padding-left: 72px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .phase.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .phase-dot {
+    position: absolute;
+    left: 14px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid;
+    background: var(--bg);
+  }
+
+  .phase-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .phase-card:hover {
+    border-color: var(--border2);
+  }
+
+  .phase-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phase-header:hover .phase-toggle {
+    opacity: 1;
+  }
+
+  .phase-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .phase-meta { flex: 1; }
+
+  .phase-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+
+  .phase-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .phase-desc {
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  .phase-toggle {
+    font-size: 18px;
+    color: var(--text3);
+    opacity: 0.6;
+    transition: transform 0.25s, opacity 0.2s;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .phase-toggle.open { transform: rotate(180deg); }
+
+  .phase-body {
+    display: none;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .phase-body.open { display: block; }
+
+  /* Section labels */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 12px;
+    margin-top: 20px;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  /* Info blocks */
+  .info-block {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text2);
+  }
+
+  .info-block strong {
+    color: var(--text);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .info-block .example {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.03);
+    border-left: 2px solid var(--border2);
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  .info-block .example .ex-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 4px;
+  }
+
+  /* Error / Fix / Warn */
+  .error-block {
+    background: var(--red-dim);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .error-block .block-title {
+    font-weight: 600;
+    color: var(--red);
+    font-size: 13px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .fix-block {
+    background: var(--green-dim);
+    border: 1px solid rgba(74,222,128,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .fix-block .block-title {
+    font-weight: 600;
+    color: var(--green);
+    font-size: 13px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .warn-block {
+    background: var(--amber-dim);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .warn-block .block-title {
+    font-weight: 600;
+    color: var(--amber);
+    font-size: 13px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .note-block {
+    background: var(--blue-dim);
+    border: 1px solid rgba(96,165,250,0.2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .note-block .block-title {
+    font-weight: 600;
+    color: var(--blue);
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  /* Algorithm grid */
+  .algo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .algo-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .algo-card:hover {
+    border-color: var(--border2);
+    background: rgba(255,255,255,0.03);
+  }
+  .algo-card .a-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .algo-card .a-type {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 0.05em;
+  }
+  .algo-card .a-detail {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text2);
+    line-height: 1.6;
+    display: none;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+  .algo-card .a-example {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--teal);
+    font-style: italic;
+  }
+  .algo-card.expanded .a-detail { display: block; }
+  .algo-card.expanded { border-color: var(--border2); }
+
+  /* Two col */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  @media (max-width: 600px) {
+    .two-col { grid-template-columns: 1fr; }
+    .algo-grid { grid-template-columns: 1fr 1fr; }
+    .timeline::before { left: 18px; }
+    .phase { padding-left: 52px; }
+    .phase-dot { left: 4px; width: 26px; height: 26px; font-size: 10px; }
+  }
+
+  /* Chips */
+  .chip-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 14px; }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 11px;
+    border-radius: 20px;
+    border: 1px solid;
+    cursor: default;
+    letter-spacing: 0.03em;
+  }
+
+  /* Metrics table */
+  .metrics-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 12px; }
+  .metrics-table th {
+    text-align: left;
+    padding: 8px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    border-bottom: 1px solid var(--border);
+  }
+  .metrics-table td {
+    padding: 9px 12px;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .metrics-table tr:last-child td { border-bottom: none; }
+  .metrics-table td:first-child { color: var(--text); font-weight: 500; }
+  .metrics-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Code block */
+  .code-block {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    margin: 10px 0;
+    overflow-x: auto;
+    line-height: 1.6;
+  }
+  .code-block .comment { color: var(--text3); }
+  .code-block .keyword { color: var(--purple); }
+  .code-block .string { color: var(--amber); }
+
+  /* Frontier badge */
+  .frontier-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    border: 1px solid;
+    margin-left: 8px;
+    vertical-align: middle;
+    letter-spacing: 0.05em;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 18px 0;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--text3);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Scroll hint */
+  .scroll-hint {
+    text-align: center;
+    margin: 48px 0 32px;
+    color: var(--text3);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+  }
+
+  /* Pulse dot on frontier */
+  .pulse {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--amber);
+    margin-right: 6px;
+    animation: pulse 2s ease-in-out infinite;
+    vertical-align: middle;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  /* Tag for "when to use" */
+  .when-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--teal);
+    background: var(--teal-dim);
+    border: 1px solid rgba(45,212,191,0.2);
+    border-radius: 6px;
+    padding: 3px 9px;
+    margin: 2px;
+  }
+
+  /* Flow path */
+  .flow-path {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+    font-size: 13px;
+  }
+  .flow-step {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    color: var(--text);
+    font-size: 12px;
+  }
+  .flow-arrow { color: var(--text3); font-size: 14px; }
+
+  ul.bullet-list {
+    padding-left: 18px;
+    color: var(--text2);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  ul.bullet-list li::marker { color: var(--purple); }
+
+  .expand-hint {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 6px;
+    font-family: var(--mono);
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <span class="header-tag">// Complete Process Map</span>
+    <h1>Machine Learning Roadmap</h1>
+    <p>From raw data to deployed model — every step, every error, every solution, and the frontier we're still discovering.</p>
+    <div style="margin-top:20px;font-size:12px;color:var(--text3);font-family:var(--mono);">
+      Click any phase to expand · Click algorithm cards to see details &amp; examples
+    </div>
+  </div>
+
+  <div class="timeline">
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PHASE 1 -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="phase" id="p1">
+      <div class="phase-dot" style="color:var(--purple);border-color:rgba(124,107,245,0.4);background:var(--bg);">01</div>
+      <div class="phase-card">
+        <div class="phase-header" onclick="togglePhase('b1','t1')">
+          <div class="phase-icon">🎯</div>
+          <div class="phase-meta">
+            <div class="phase-label">Phase 01 — Foundation</div>
+            <div class="phase-title">Problem Definition</div>
+            <div class="phase-desc">Before writing a single line of code, define what you're solving</div>
+          </div>
+          <div class="phase-toggle" id="t1">▾</div>
+        </div>
+        <div class="phase-body" id="b1">
+          <div class="info-block">
+            <strong>Why this phase matters</strong>
+            Rushing to model training without a clear problem definition is the single biggest reason ML projects fail. You must decide: what question are we answering? What does a correct answer look like? How will we measure success?
+            <div class="example">
+              <div class="ex-label">Real-world example</div>
+              A bank wants to reduce loan defaults. Wrong framing: "build a neural network on loan data." Correct framing: "predict probability that a loan applicant will default within 12 months, maximizing recall on defaulters while keeping false positive rate below 15%."
+            </div>
+          </div>
+
+          <div class="section-label">Learning paradigm — choose your path</div>
+          <div class="two-col">
+            <div class="info-block">
+              <strong>🏷 Supervised Learning</strong>
+              You have labeled data — input-output pairs. The model learns the mapping from input X to output Y.
+              <div class="example">
+                <div class="ex-label">Examples</div>
+                Email → Spam/Not Spam · House features → Price · X-ray image → Disease/Healthy · Customer behavior → Churn/No-churn
+              </div>
+            </div>
+            <div class="info-block">
+              <strong>🔍 Unsupervised Learning</strong>
+              No labels. The model discovers hidden structure, patterns, or groupings in the data on its own.
+              <div class="example">
+                <div class="ex-label">Examples</div>
+                Customer purchase history → Segments (high-value, budget-conscious, seasonal) · News articles → Topic clusters · Credit card transactions → Anomaly detection
+              </div>
+            </div>
+            <div class="info-block">
+              <strong>🎮 Reinforcement Learning</strong>
+              An agent learns by taking actions in an environment and receiving rewards or penalties. No dataset — experience is the teacher.
+              <div class="example">
+                <div class="ex-label">Examples</div>
+                AlphaGo learning to play Go · Robot arm learning to pick objects · Ad bidding system optimizing clicks · Self-driving car learning to navigate
+              </div>
+            </div>
+            <div class="info-block">
+              <strong>🔀 Semi-supervised</strong>
+              A small amount of labeled data + large amounts of unlabeled data. The model uses unlabeled data to improve its representation before fine-tuning on labels.
+              <div class="example">
+                <div class="ex-label">Examples</div>
+                Medical imaging: 100 labeled scans + 100,000 unlabeled scans · GPT pre-training on internet text → fine-tuning on specific tasks
+              </div>
+            </div>
+          </div>
+
+          <div class="note-block">
+            <div class="block-title">📌 Key questions to answer before proceeding</div>
+            What is the target variable (label)? · Is this classification or regression? · What is an acceptable error rate? · How will the model be used in production? · Is there ethical risk (bias, fairness)?
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PHASE 2 -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="phase" id="p2">
+      <div class="phase-dot" style="color:var(--teal);border-color:rgba(45,212,191,0.4);background:var(--bg);">02</div>
+      <div class="phase-card">
+        <div class="phase-header" onclick="togglePhase('b2','t2')">
+          <div class="phase-icon">📊</div>
+          <div class="phase-meta">
+            <div class="phase-label">Phase 02 — Data</div>
+            <div class="phase-title">Data Collection &amp; Exploration</div>
+            <div class="phase-desc">Garbage in, garbage out — understanding your data is non-negotiable</div>
+          </div>
+          <div class="phase-toggle" id="t2">▾</div>
+        </div>
+        <div class="phase-body" id="b2">
+          <div class="info-block">
+            <strong>Exploratory Data Analysis (EDA)</strong>
+            Before any preprocessing, spend significant time understanding what you have. Look at distributions, relationships, outliers, and anomalies. EDA prevents you from building a model on flawed foundations.
+            <div class="example">
+              <div class="ex-label">EDA checklist</div>
+              df.describe() for statistics · df.isnull().sum() for missing data · sns.heatmap(corr) for correlations · Plot histograms for each feature · Check class balance with value_counts()
+            </div>
+          </div>
+
+          <div class="section-label">Data types</div>
+          <div class="chip-row">
+            <span class="chip" style="background:var(--purple-dim);color:var(--purple);border-color:rgba(124,107,245,0.3);">Numerical continuous</span>
+            <span class="chip" style="background:var(--purple-dim);color:var(--purple);border-color:rgba(124,107,245,0.3);">Numerical discrete</span>
+            <span class="chip" style="background:var(--teal-dim);color:var(--teal);border-color:rgba(45,212,191,0.3);">Categorical nominal</span>
+            <span class="chip" style="background:var(--teal-dim);color:var(--teal);border-color:rgba(45,212,191,0.3);">Categorical ordinal</span>
+            <span class="chip" style="background:var(--amber-dim);color:var(--amber);border-color:rgba(245,158,11,0.3);">Text / NLP</span>
+            <span class="chip" style="background:var(--amber-dim);color:var(--amber);border-color:rgba(245,158,11,0.3);">Images</span>
+            <span class="chip" style="background:var(--pink-dim);color:var(--pink);border-color:rgba(244,114,182,0.3);">Time-series</span>
+          </div>
+
+          <div class="section-label">Problems you will encounter</div>
+          <div class="error-block">
+            <div class="block-title">⚠ Missing Values</div>
+            When: fields are blank because data wasn't collected, sensors failed, or users skipped form fields.
+            Example: A patient dataset where 30% of cholesterol readings are missing because not all patients had that test.
+          </div>
+          <div class="fix-block">
+            <div class="block-title">✓ Solutions for Missing Values</div>
+            Simple: fill with mean (numerical) or mode (categorical). Better: KNN imputation (fills using similar rows). Advanced: MICE (iterative imputation). Sometimes: drop rows if &lt;1% affected. Never: leave NaN — most algorithms will crash or silently produce bad results.
+          </div>
+          <div class="error-block">
+            <div class="block-title">⚠ Class Imbalance</div>
+            When: one category vastly outnumbers others. Example: fraud detection where 99.9% of transactions are legitimate. A model predicting "not fraud" for everything gets 99.9% accuracy but catches zero fraud.
+          </div>
+          <div class="fix-block">
+            <div class="block-title">✓ Solutions for Class Imbalance</div>
+            SMOTE: synthetically creates new minority-class examples by interpolating between existing ones. Class weights: tell the model "mistakes on the minority class cost 10x more." Undersampling: randomly remove majority class samples. Threshold tuning: instead of 0.5 cutoff, use 0.3 so more positives are caught.
+          </div>
+          <div class="error-block">
+            <div class="block-title">⚠ Data Leakage</div>
+            When: future information accidentally leaks into training data. This is subtle and devastating. Example: predicting hospital readmission using "discharge notes" — but those notes contain the outcome. The model learns to read the answer, not the signal.
+          </div>
+          <div class="fix-block">
+            <div class="block-title">✓ Preventing Data Leakage</div>
+            Always split data BEFORE any preprocessing. Never fit scalers/encoders on the full dataset. Use time-based splits for time-series. Carefully audit every feature for temporal contamination.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PHASE 3 -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="phase" id="p3">
+      <div class="phase-dot" style="color:var(--amber);border-color:rgba(245,158,11,0.4);background:var(--bg);">03</div>
+      <div class="phase-card">
+        <div class="phase-header" onclick="togglePhase('b3','t3')">
+          <div class="phase-icon">⚙️</div>
+          <div class="phase-meta">
+            <div class="phase-label">Phase 03 — Preprocessing</div>
+            <div class="phase-title">Feature Engineering &amp; Preprocessing</div>
+            <div class="phase-desc">Transform raw data into what the model actually understands</div>
+          </div>
+          <div class="phase-toggle" id="t3">▾</div>
+        </div>
+        <div class="phase-body" id="b3">
+
+          <div class="section-label">Scaling — critical for distance-based algorithms</div>
+          <div class="two-col">
+            <div class="info-block">
+              <strong>Normalization (Min-Max Scaling)</strong>
+              Scales all values to the range [0, 1]. Formula: (x - min) / (max - min). Best for: neural networks, image pixel values (0–255 → 0–1).
+              <div class="example">
+                <div class="ex-label">Example</div>
+                Income: [20000, 200000] becomes [0.0, 1.0]. Age: [18, 90] becomes [0.0, 1.0]. Both now on same scale.
+              </div>
+            </div>
+            <div class="info-block">
+              <strong>Standardization (Z-score)</strong>
+              Centers data at mean=0, std=1. Formula: (x - mean) / std. Handles outliers better. Best for: SVM, logistic regression, PCA, KNN.
+              <div class="example">
+                <div class="ex-label">Example</div>
+                Salary [30k–500k] standardized: most values fall in [-2, 2]. An outlier of 5M becomes ~8 (far from mean but doesn't distort others).
+              </div>
+            </div>
+          </div>
+
+          <div class="warn-block">
+            <div class="block-title">⚡ Tree-based models (Random Forest, XGBoost) don't need scaling</div>
+            They split on thresholds, so the absolute magnitude doesn't matter. Applying scaling to them doesn't hurt but is unnecessary.
+          </div>
+
+          <div class="section-label">Encoding categorical variables</div>
+          <div class="info-block">
+            <strong>One-Hot Encoding</strong>
+            Creates a binary column for each category. Use for nominal data (no order). Problem: high cardinality (e.g. 1000 cities = 1000 columns). Solution: Target encoding or embeddings for high cardinality.
+            <div class="example">
+              <div class="ex-label">Example</div>
+              Color: [Red, Blue, Green] → Red=[1,0,0], Blue=[0,1,0], Green=[0,0,1]. The model sees three separate binary features, not a numeric 0/1/2 that implies Red &lt; Blue &lt; Green.
+            </div>
+          </div>
+          <div class="info-block">
+            <strong>Label / Ordinal Encoding</strong>
+            Maps categories to integers. Use ONLY for ordinal data where order matters. Never use for nominal data — the model will infer false relationships.
+            <div class="example">
+              <div class="ex-label">Example</div>
+              Education: [High School=0, Bachelor=1, Master=2, PhD=3]. The ordering is meaningful here. But Color=[Red=0, Blue=1, Green=2] is wrong — no model should infer Blue &gt; Red.
+            </div>
+          </div>
+
+          <div class="section-label">The critical split — do this before any preprocessing</div>
+          <div class="info-block">
+            <strong>Train / Validation / Test Split</strong>
+            The test set must be treated as data from the future. You are not allowed to look at it until the very end. Everything — scaling, imputation, encoding — must be fitted on training data only, then applied to validation and test.
+            <div class="example">
+              <div class="ex-label">Correct workflow</div>
+              1. Split data: 70% train, 15% val, 15% test. 2. Fit scaler on train only: scaler.fit(X_train). 3. Transform all three: scaler.transform(X_train / X_val / X_test). 4. Train model on X_train. 5. Tune on X_val. 6. Final report on X_test (touch ONCE).
+            </div>
+          </div>
+
+          <div class="section-label">Feature selection — less can be more</div>
+          <div class="info-block">
+            <strong>Why remove features?</strong>
+            Irrelevant features add noise. Correlated features add redundancy. More features = more overfitting risk and slower training. The goal is the smallest set of features that retains maximum predictive power.
+            <div class="example">
+              <div class="ex-label">Methods</div>
+              Correlation filter: drop features correlated >0.95 with another. Recursive Feature Elimination (RFE): train model, remove weakest feature, repeat. LASSO regression: L1 penalty automatically drives irrelevant feature weights to zero. Tree feature importances: XGBoost ranks features by how much they reduce impurity.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PHASE 4 — ALGORITHMS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="phase" id="p4">
+      <div class="phase-dot" style="color:var(--blue);border-color:rgba(96,165,250,0.4);background:var(--bg);">04</div>
+      <div class="phase-card">
+        <div class="phase-header" onclick="togglePhase('b4','t4')">
+          <div class="phase-icon">🧠</div>
+          <div class="phase-meta">
+            <div class="phase-label">Phase 04 — Algorithms</div>
+            <div class="phase-title">Model Selection &amp; Algorithms</div>
+            <div class="phase-desc">Every algorithm family, when to use it, and its real-world behavior</div>
+          </div>
+          <div class="phase-toggle" id="t4">▾</div>
+        </div>
+        <div class="phase-body" id="b4">
+          <div class="expand-hint">↓ Click any algorithm card to expand details and examples</div>
+
+          <div class="section-label" style="margin-top:14px;">Supervised — Classification &amp; Regression</div>
+          <div class="algo-grid">
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Linear / Logistic Regression</div>
+              <div class="a-type">Supervised · baseline</div>
+              <div class="a-detail">
+                <b>How it works:</b> Fits a line (or plane) through data points by minimizing the sum of squared errors. Logistic regression adds a sigmoid function to output probabilities between 0 and 1.<br><br>
+                <b>Strengths:</b> Extremely interpretable (coefficients = feature importance). Fast to train. Good baseline.<br><br>
+                <b>Weaknesses:</b> Assumes linear relationships. Fails on XOR-type problems or complex decision boundaries.<br><br>
+                <b>When to use:</b> Always as a baseline first. When interpretability is required (finance, medicine). When relationships are approximately linear.
+                <div class="a-example">📌 Example: Credit scoring — each feature (income, age, debt ratio) gets a coefficient. Loan officers can explain why a decision was made.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Decision Tree</div>
+              <div class="a-type">Supervised · interpretable</div>
+              <div class="a-detail">
+                <b>How it works:</b> Recursively splits data by asking yes/no questions on features. Each leaf node holds a prediction. A tree of depth 3 with binary splits = 8 possible outcomes.<br><br>
+                <b>Problem — Overfitting:</b> A deep tree memorizes training data. Given the same 100 training examples, it can grow leaves with just 1 sample each — perfect training accuracy, terrible test accuracy.<br><br>
+                <b>Solutions:</b> max_depth, min_samples_leaf, cost-complexity pruning. Or better: use Random Forest.
+                <div class="a-example">📌 Example: Diagnosing machine failure. "Temperature &gt; 80°C? → Yes → Vibration &gt; 0.5g? → Yes → FAIL." Operators can follow the logic step by step.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Random Forest</div>
+              <div class="a-type">Supervised · ensemble</div>
+              <div class="a-detail">
+                <b>How it works:</b> Builds N decision trees, each trained on a random subset of data (bagging) and a random subset of features. Final prediction = majority vote (classification) or average (regression).<br><br>
+                <b>Why it works:</b> Individual trees overfit in different ways. Averaging them cancels out the noise — the signal remains. This is called variance reduction through ensemble averaging.<br><br>
+                <b>Key hyperparameters:</b> n_estimators (more = better but slower), max_depth, max_features.
+                <div class="a-example">📌 Example: Predicting customer churn. 500 trees each trained on random data subsets — collectively they generalize far better than any single tree and reveal which features matter most.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Gradient Boosting (XGBoost)</div>
+              <div class="a-type">Supervised · ensemble</div>
+              <div class="a-detail">
+                <b>How it works:</b> Builds trees sequentially. Each new tree focuses specifically on the errors (residuals) of the previous trees. Final prediction = sum of all trees weighted by a learning rate.<br><br>
+                <b>Why it's powerful:</b> Systematic error reduction. State-of-the-art on tabular data. Wins most Kaggle competitions.<br><br>
+                <b>Key regularization params:</b> learning_rate (lower = better but needs more trees), max_depth, subsample, reg_lambda (L2), reg_alpha (L1).
+                <div class="a-example">📌 Example: Insurance claim prediction. XGBoost with 1000 trees, each correcting prior mistakes. Tuned with Bayesian search over learning_rate, max_depth, and subsample.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Support Vector Machine</div>
+              <div class="a-type">Supervised · margin-based</div>
+              <div class="a-detail">
+                <b>How it works:</b> Finds the hyperplane that maximizes the margin between classes. Only the boundary data points (support vectors) matter. Kernel trick maps data to higher dimensions to find non-linear boundaries.<br><br>
+                <b>Kernels:</b> Linear (fast, for linearly separable data), RBF (most common, handles non-linear), Polynomial (degree=3 etc.).<br><br>
+                <b>Problem:</b> Scales poorly — O(n²) to O(n³). Not recommended for datasets &gt; 100k rows.
+                <div class="a-example">📌 Example: Text classification with TF-IDF features. SVM with linear kernel handles high-dimensional sparse text data excellently — often beats neural networks on small datasets.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">K-Nearest Neighbors</div>
+              <div class="a-type">Supervised · instance-based</div>
+              <div class="a-detail">
+                <b>How it works:</b> No training phase. At inference, finds K closest training points (by Euclidean distance or others) and returns their majority vote or average. K=1: memorizes training data. K=N: always predicts the mean.<br><br>
+                <b>Problems:</b> Very slow at inference (scans all training points). Sensitive to irrelevant features and scale — always standardize first. Curse of dimensionality: distance becomes meaningless in very high dimensions.
+                <div class="a-example">📌 Example: Recommender system — "users who bought these 5 items also bought..." The 10 most similar users (nearest neighbors) form the recommendation pool.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Neural Networks</div>
+              <div class="a-type">Supervised · deep learning</div>
+              <div class="a-detail">
+                <b>How it works:</b> Layers of neurons (linear transformation + activation function). Forward pass computes predictions. Backward pass (backpropagation) computes gradients and updates weights via gradient descent.<br><br>
+                <b>Universal approximation:</b> Given enough neurons, can approximate any function. But needs lots of data to not overfit.<br><br>
+                <b>Subtypes:</b> CNN (images — uses convolving filters to detect edges, shapes) · RNN/LSTM (sequences — maintains hidden state across time steps) · Transformer (attention mechanism — parallelizable, current SOTA for NLP and vision)
+                <div class="a-example">📌 Example: ResNet-50 classifies 1000 ImageNet categories with 95%+ accuracy using 50 layers. Each layer learns progressively abstract features: edges → shapes → parts → objects.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Naive Bayes</div>
+              <div class="a-type">Supervised · probabilistic</div>
+              <div class="a-detail">
+                <b>How it works:</b> Applies Bayes' theorem — P(class|features) ∝ P(features|class) × P(class). "Naive" because it assumes features are independent of each other (rarely true, but works surprisingly well).<br><br>
+                <b>Strengths:</b> Extremely fast. Works well with very little data. Excels on text (multinomial Naive Bayes counts word frequencies).
+                <div class="a-example">📌 Example: Email spam filter. P(spam | "free money now") = P("free"|spam) × P("money"|spam) × P("now"|spam) × P(spam). Each word contributes independently. Trained on 10,000 emails in milliseconds.</div>
+              </div>
+            </div>
+
+          </div><!-- end algo-grid supervised -->
+
+          <div class="section-label">Unsupervised — Clustering, Compression &amp; Generation</div>
+          <div class="algo-grid">
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">K-Means Clustering</div>
+              <div class="a-type">Unsupervised · clustering</div>
+              <div class="a-detail">
+                <b>How it works:</b> Assigns each point to 1 of K clusters by minimizing within-cluster sum of squared distances to the centroid. Iterates: reassign points → recompute centroids → repeat until convergence.<br><br>
+                <b>Choosing K:</b> Elbow method: plot inertia vs K, find the "elbow." Silhouette score: measures how similar a point is to its cluster vs others.<br><br>
+                <b>Problems:</b> Assumes spherical clusters of similar size. Sensitive to outliers and initialization (use k-means++ for better init).
+                <div class="a-example">📌 Example: Segmenting 10M customers into 5 groups by purchase behavior. Group 1: high-frequency low-value. Group 2: low-frequency high-value (VIPs). Group 3: churned. Different marketing strategies for each.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">DBSCAN</div>
+              <div class="a-type">Unsupervised · density</div>
+              <div class="a-detail">
+                <b>How it works:</b> A point is a "core point" if at least min_samples neighbors lie within radius ε. Connected core points form a cluster. Points not in any cluster = outliers (noise).<br><br>
+                <b>Strengths:</b> Finds clusters of arbitrary shape (not just spherical). Automatically detects outliers. Doesn't require specifying K.<br><br>
+                <b>Weakness:</b> Struggles with varying density. Two params (ε, min_samples) hard to tune.
+                <div class="a-example">📌 Example: Detecting GPS anomalies in logistics. Normal routes form dense clusters. A truck detouring through an unauthorized area = noise point = flagged for review.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">PCA</div>
+              <div class="a-type">Unsupervised · dim. reduction</div>
+              <div class="a-detail">
+                <b>How it works:</b> Finds the directions (principal components) of maximum variance in the data. Projects data onto these axes, ranked by explained variance. First component explains most variance.<br><br>
+                <b>Use cases:</b> Visualization (reduce to 2D), noise reduction, remove correlated features before training, speed up training.<br><br>
+                <b>Limitation:</b> Linear only. t-SNE and UMAP handle non-linear structure better (but are too slow for large datasets).
+                <div class="a-example">📌 Example: Gene expression data with 20,000 genes per patient. PCA reduces to 50 components explaining 90% of variance. SVM trained on 50 PCA features beats SVM on 20,000 raw features.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Autoencoder</div>
+              <div class="a-type">Unsupervised · neural</div>
+              <div class="a-detail">
+                <b>How it works:</b> Encoder compresses input to a small latent vector z. Decoder reconstructs the original input from z. Trained to minimize reconstruction error.<br><br>
+                <b>Anomaly detection:</b> Train on normal data. At inference, anomalous inputs have high reconstruction error — the model "can't reconstruct what it hasn't seen."<br><br>
+                <b>Variants:</b> Variational Autoencoder (VAE) learns a probability distribution in latent space — can generate new samples.
+                <div class="a-example">📌 Example: Network intrusion detection. Autoencoder trained on normal traffic. Attack traffic has high reconstruction error — flagged as anomaly. Works without labeled attack examples.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Gaussian Mixture Model</div>
+              <div class="a-type">Unsupervised · probabilistic</div>
+              <div class="a-detail">
+                <b>How it works:</b> Models data as a mixture of K Gaussian distributions. Uses Expectation-Maximization (EM) to fit. Unlike K-Means, assigns soft probabilities — a point can be 70% cluster 1 and 30% cluster 2.<br><br>
+                <b>Advantage over K-Means:</b> Handles elliptical clusters (not just spherical). Probability-weighted membership is more realistic.
+                <div class="a-example">📌 Example: Modeling financial returns. Market regimes (bull/bear/sideways) aren't crisp — a month might be 60% "normal" and 40% "high volatility." GMM captures this ambiguity where K-Means cannot.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">t-SNE / UMAP</div>
+              <div class="a-type">Unsupervised · visualization</div>
+              <div class="a-detail">
+                <b>How it works:</b> Non-linear dimensionality reduction designed for visualization. Preserves local neighborhood structure — nearby points in high-dim space stay nearby in 2D. UMAP is faster and better at preserving global structure.<br><br>
+                <b>Important:</b> Do NOT use t-SNE/UMAP outputs as features for training — distances are not meaningful. Use only for visualization.
+                <div class="a-example">📌 Example: Visualizing 768-dimensional BERT embeddings of 50,000 news articles. t-SNE projects to 2D — sports, politics, tech, and science form visually distinct clusters, validating the embedding quality.</div>
+              </div>
+            </div>
+
+          </div><!-- end algo-grid unsupervised -->
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PHASE 5 — TRAINING & ERRORS -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="phase" id="p5">
+      <div class="phase-dot" style="color:var(--red);border-color:rgba(248,113,113,0.4);background:var(--bg);">05</div>
+      <div class="phase-card">
+        <div class="phase-header" onclick="togglePhase('b5','t5')">
+          <div class="phase-icon">⚡</div>
+          <div class="phase-meta">
+            <div class="phase-label">Phase 05 — Training</div>
+            <div class="phase-title">Training, Bias-Variance &amp; Regularization</div>
+            <div class="phase-desc">Where things go wrong — and the complete toolkit to fix them</div>
+          </div>
+          <div class="phase-toggle" id="t5">▾</div>
+        </div>
+        <div class="phase-body" id="b5">
+
+          <div class="info-block">
+            <strong>The Bias-Variance Tradeoff — the central tension of ML</strong>
+            Every model has two sources of error: Bias (how wrong the model is on average — underfitting) and Variance (how much the model changes with different training data — overfitting). Making a model more complex reduces bias but increases variance. The art of ML is finding the sweet spot.
+            <div class="example">
+              <div class="ex-label">Intuition</div>
+              Think of hitting a dartboard. High bias, low variance: all darts cluster far from the bullseye (consistently wrong). Low bias, high variance: darts scattered randomly around the bullseye (right on average, unpredictable). We want: clustered around the bullseye.
+            </div>
+          </div>
+
+          <div class="two-col">
+            <div class="error-block">
+              <div class="block-title">🔴 Underfitting (High Bias)</div>
+              Model is too simple to capture the pattern. Signs: high training error AND high validation error. Both errors are large. The learning curves plateau high and close together.
+              <br><br>
+              Causes: Too few features · Model complexity too low · Regularization too strong · Too few training epochs
+            </div>
+            <div class="error-block">
+              <div class="block-title">🔴 Overfitting (High Variance)</div>
+              Model memorizes training data, fails to generalize. Signs: very low training error, but high validation error. A large gap between the two curves.
+              <br><br>
+              Causes: Too many features · Model too complex · Too little data · No regularization · Training too long
+            </div>
+          </div>
+          <div class="two-col">
+            <div class="fix-block">
+              <div class="block-title">✓ Fix Underfitting</div>
+              Use more complex model · Add polynomial or interaction features · Reduce regularization (lower λ) · Train for more epochs · Try gradient boosting instead of linear model
+            </div>
+            <div class="fix-block">
+              <div class="block-title">✓ Fix Overfitting</div>
+              Apply regularization · Get more data · Data augmentation · Early stopping · Reduce model depth/size · Dropout (neural nets) · Ensemble methods
+            </div>
+          </div>
+
+          <div class="section-label">Regularization — the overfitting antidote</div>
+          <div class="info-block">
+            <strong>L1 Regularization (LASSO)</strong>
+            Adds the sum of absolute values of weights to the loss: Loss = MSE + λ × Σ|wᵢ|. Effect: drives some weights to exactly zero — acts as automatic feature selection. The model "chooses" which features to use and ignores the rest.
+            <div class="example">
+              <div class="ex-label">Example</div>
+              You have 100 features for house price prediction. LASSO with λ=0.01 drives 70 weights to zero, keeping only 30 meaningful features (lot size, bedrooms, location, school district, year built...). Simpler and more interpretable.
+            </div>
+          </div>
+          <div class="info-block">
+            <strong>L2 Regularization (Ridge)</strong>
+            Adds the sum of squared weights: Loss = MSE + λ × Σwᵢ². Effect: shrinks all weights toward zero but rarely to exactly zero. Prevents any single feature from dominating. Works well when many features have small but real effects.
+            <div class="example">
+              <div class="ex-label">Example</div>
+              Same 100 features. Ridge keeps all 100 but shrinks coefficients. If "number of bathrooms" was getting an unreasonably large coefficient, Ridge pulls it back toward the group. All features contribute moderately.
+            </div>
+          </div>
+          <div class="info-block">
+            <strong>Dropout (Neural Networks)</strong>
+            During each training step, randomly set p% of neurons to zero. Forces the network to learn redundant representations — no neuron can rely on any other. At inference, all neurons are active (scaled by p).
+            <div class="example">
+              <div class="ex-label">Example</div>
+              ResNet trained on 50,000 images. Without dropout: memorizes training examples, val accuracy 78%. With dropout=0.5: val accuracy 89%. Each neuron learns independently useful features.
+            </div>
+          </div>
+          <div class="info-block">
+            <strong>Early Stopping</strong>
+            Monitor validation loss during training. Stop when it stops decreasing (and starts increasing). The model at the lowest validation loss point is saved.
+            <div class="example">
+              <div class="ex-label">Example</div>
+              Neural net training: epoch 1-50 both train and val loss decrease. Epoch 50-80: train loss still decreasing but val loss starts increasing (overfitting begins). Save the epoch-50 model. Never train to epoch 200.
+            </div>
+          </div>
+
+          <div class="warn-block">
+            <div class="block-title">⚡ Generalization — the only metric that matters in production</div>
+            A model that gets 99% on training data but 65% on new data is worthless. Generalization = performance on unseen data from the same distribution. Achieved through: sufficient diverse training data, proper regularization, appropriate model complexity, and honest evaluation on a truly held-out test set.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PHASE 6 — EVALUATION -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="phase" id="p6">
+      <div class="phase-dot" style="color:var(--green);border-color:rgba(74,222,128,0.4);background:var(--bg);">06</div>
+      <div class="phase-card">
+        <div class="phase-header" onclick="togglePhase('b6','t6')">
+          <div class="phase-icon">📐</div>
+          <div class="phase-meta">
+            <div class="phase-label">Phase 06 — Evaluation</div>
+            <div class="phase-title">Metrics &amp; Validation</div>
+            <div class="phase-desc">Measuring what actually matters — choosing the right yardstick</div>
+          </div>
+          <div class="phase-toggle" id="t6">▾</div>
+        </div>
+        <div class="phase-body" id="b6">
+
+          <div class="warn-block">
+            <div class="block-title">⚡ Accuracy is almost always the wrong metric</div>
+            If 99% of transactions are legitimate, a model predicting "not fraud" for everything has 99% accuracy. It catches zero fraud. Always choose metrics aligned with your actual business problem.
+          </div>
+
+          <div class="section-label">Classification metrics</div>
+          <table class="metrics-table">
+            <thead><tr><th>Metric</th><th>Formula</th><th>When to use</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Accuracy</td><td>Correct / Total</td><td>Only when classes are balanced</td><td>MNIST digit recognition (10 classes, balanced)</td></tr>
+              <tr><td>Precision</td><td>TP / (TP + FP)</td><td>Cost of false positives is high</td><td>Spam filter — don't block real emails</td></tr>
+              <tr><td>Recall</td><td>TP / (TP + FN)</td><td>Cost of false negatives is high</td><td>Cancer screening — don't miss actual cancers</td></tr>
+              <tr><td>F1 Score</td><td>2×P×R / (P+R)</td><td>Balance precision and recall</td><td>Fraud detection — care about both FP and FN</td></tr>
+              <tr><td>ROC-AUC</td><td>Area under ROC curve</td><td>Evaluate across all thresholds</td><td>Ranking model quality regardless of threshold</td></tr>
+              <tr><td>PR-AUC</td><td>Area under PR curve</td><td>Highly imbalanced datasets</td><td>Rare disease detection, anomaly detection</td></tr>
+            </tbody>
+          </table>
+
+          <div class="section-label">Regression metrics</div>
+          <table class="metrics-table">
+            <thead><tr><th>Metric</th><th>Sensitivity to outliers</th><th>When to use</th></tr></thead>
+            <tbody>
+              <tr><td>MAE (Mean Absolute Error)</td><td>Low — all errors weighted equally</td><td>When outliers are real and you care about all errors equally. House prices.</td></tr>
+              <tr><td>RMSE (Root Mean Squared Error)</td><td>High — large errors penalized heavily</td><td>When large errors are particularly bad. Forecasting energy demand.</td></tr>
+              <tr><td>R² Score</td><td>Medium</td><td>Proportion of variance explained. 0 = constant model, 1 = perfect, negative = worse than constant.</td></tr>
+              <tr><td>MAPE</td><td>Medium</td><td>Percentage error — easy to communicate. "Our model is off by 8% on average."</td></tr>
+            </tbody>
+          </table>
+
+          <div class="section-label">Cross-validation — the gold standard</div>
+          <div class="info-block">
+            <strong>K-Fold Cross-Validation</strong>
+            Split data into K equal folds. Train on K-1 folds, validate on remaining 1. Repeat K times so every fold is the validation set exactly once. Report mean ± std across all K scores.
+            <div class="example">
+              <div class="ex-label">Why it beats a single train/val split</div>
+              A single 80/20 split may get lucky (validation set is "easy") or unlucky. K=10 fold CV uses all data for both training and evaluation, giving a much more reliable performance estimate. A model with CV accuracy 82% ± 1% is more trustworthy than one with 84% on a single run.
+            </div>
+          </div>
+          <div class="info-block">
+            <strong>Stratified K-Fold</strong>
+            Ensures each fold has the same class proportions as the full dataset. Essential for imbalanced data. Without stratification, some folds might contain no minority class examples.
+            <div class="example">
+              <div class="ex-label">Example</div>
+              Fraud dataset: 0.1% positive. With random K-fold, some folds might have 0 fraud cases. With stratified K-fold, every fold has ~0.1% fraud, giving consistent and meaningful evaluation.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PHASE 7 — HYPERPARAMETER TUNING -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="phase" id="p7">
+      <div class="phase-dot" style="color:var(--pink);border-color:rgba(244,114,182,0.4);background:var(--bg);">07</div>
+      <div class="phase-card">
+        <div class="phase-header" onclick="togglePhase('b7','t7')">
+          <div class="phase-icon">🔧</div>
+          <div class="phase-meta">
+            <div class="phase-label">Phase 07 — Optimization</div>
+            <div class="phase-title">Hyperparameter Tuning</div>
+            <div class="phase-desc">Systematically find the best model configuration without touching the test set</div>
+          </div>
+          <div class="phase-toggle" id="t7">▾</div>
+        </div>
+        <div class="phase-body" id="b7">
+
+          <div class="info-block">
+            <strong>Parameters vs Hyperparameters</strong>
+            Parameters are learned from data (weights, biases). Hyperparameters are set by you before training (learning rate, number of trees, regularization strength, batch size). Choosing good hyperparameters is often the difference between a mediocre and a state-of-the-art model.
+          </div>
+
+          <div class="two-col">
+            <div class="info-block">
+              <strong>Grid Search</strong>
+              Define a grid of all parameter combinations and try every single one. Exhaustive but exponential: 5 values × 5 values × 5 values = 125 training runs. Becomes impractical beyond 3-4 parameters.
+              <div class="example">
+                <div class="ex-label">Example</div>
+                SVM grid: C=[0.1,1,10,100] × kernel=[linear,rbf,poly] × gamma=[0.001,0.01,0.1,1] = 48 combinations. With 5-fold CV = 240 model fits.
+              </div>
+            </div>
+            <div class="info-block">
+              <strong>Random Search</strong>
+              Sample random combinations from the parameter space. Research shows that for most problems, random search finds better results than grid search in the same time budget. Reason: usually only a few parameters really matter — random search explores more of those dimensions.
+              <div class="example">
+                <div class="ex-label">Example</div>
+                XGBoost with 8 hyperparameters. Grid search: millions of combos. Random search with n_iter=100: tries 100 random combos in minutes. Finds near-optimal configuration.
+              </div>
+            </div>
+          </div>
+          <div class="info-block">
+            <strong>Bayesian Optimization (Optuna, Hyperopt)</strong>
+            Builds a probabilistic model (surrogate) of how hyperparameters relate to performance. Uses this to propose the next best configuration to try — focuses trials where performance is likely highest. Most sample-efficient method.
+            <div class="example">
+              <div class="ex-label">Example</div>
+              Optuna study on a neural network. First 10 trials explore broadly. Trials 11-50: Optuna notices that learning_rate=0.001 and batch_size=32 consistently perform well, and starts focusing trials in that region. Final model often surpasses days of manual tuning.
+            </div>
+          </div>
+
+          <div class="error-block">
+            <div class="block-title">⚠ Critical trap: test set contamination through tuning</div>
+            If you tune hyperparameters by checking test set performance, the test set is no longer unseen. The reported performance will be optimistic. Always tune on the validation set only. Report final performance on the test set exactly once.
+          </div>
+
+          <div class="info-block">
+            <strong>Learning Rate — the most important hyperparameter in deep learning</strong>
+            Too high: loss oscillates or diverges. Too low: training is slow and may get stuck in local minima. Techniques: LR range test (sweep LR from 1e-7 to 10, find where loss decreases fastest), cosine annealing (warm up then gradually cool), cyclical LR, AdaGrad/Adam (adaptive LR per parameter).
+            <div class="example">
+              <div class="ex-label">Rule of thumb</div>
+              Start with Adam optimizer at lr=1e-3 for most tasks. Fine-tuning pre-trained models: lr=1e-5 to 1e-4 (lower to not "forget" pre-trained knowledge). Use learning rate scheduling — decay after each epoch.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- PHASE 8 — DEPLOYMENT -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="phase" id="p8">
+      <div class="phase-dot" style="color:var(--blue);border-color:rgba(96,165,250,0.4);background:var(--bg);">08</div>
+      <div class="phase-card">
+        <div class="phase-header" onclick="togglePhase('b8','t8')">
+          <div class="phase-icon">🚀</div>
+          <div class="phase-meta">
+            <div class="phase-label">Phase 08 — Production</div>
+            <div class="phase-title">Deployment &amp; Monitoring</div>
+            <div class="phase-desc">A model in production faces challenges no training set can prepare you for</div>
+          </div>
+          <div class="phase-toggle" id="t8">▾</div>
+        </div>
+        <div class="phase-body" id="b8">
+
+          <div class="info-block">
+            <strong>Model Serving Patterns</strong>
+            Real-time API: model loaded in a server, receives requests and returns predictions in milliseconds. Use Flask/FastAPI for simple cases, TorchServe/TF Serving for production scale. Batch: process large volumes overnight (recommendation systems, fraud scoring). Edge: model runs on-device (mobile, IoT) for latency or privacy.
+            <div class="example">
+              <div class="ex-label">Example stack</div>
+              FastAPI endpoint → model loaded at startup → request arrives → preprocess (same pipeline as training!) → model.predict() → post-process → JSON response. Containerized with Docker, deployed on Kubernetes.
+            </div>
+          </div>
+
+          <div class="section-label">Problems in production</div>
+          <div class="error-block">
+            <div class="block-title">⚠ Data Drift</div>
+            The distribution of input features shifts over time. The model was trained on 2022 data — in 2024, user behavior has changed. Signs: prediction confidence drops, business metrics deteriorate even though code hasn't changed.
+            <div style="margin-top:8px;">Example: A model trained to score ad clicks during COVID behaved poorly post-COVID — user engagement patterns changed dramatically. The model had never seen "normal" pre-pandemic behavior.</div>
+          </div>
+          <div class="fix-block">
+            <div class="block-title">✓ Detecting &amp; Handling Data Drift</div>
+            Monitor statistical tests (KS test, PSI score) on input feature distributions weekly. Set alerts when drift score exceeds threshold. Schedule automatic retraining pipelines. Maintain rolling training windows (last 6 months of data, not all historical data).
+          </div>
+          <div class="error-block">
+            <div class="block-title">⚠ Concept Drift</div>
+            The underlying relationship between X and Y changes. Even if feature distributions are stable, the patterns that predict Y no longer hold. Harder to detect — inputs look normal but predictions are wrong.
+            <div style="margin-top:8px;">Example: Credit scoring. Pre-2008: high home equity correlated with repayment ability. Post-2008: same equity, but housing crash means very different risk. Same inputs, completely different meaning.</div>
+          </div>
+
+          <div class="section-label">MLOps — the infrastructure of production ML</div>
+          <div class="two-col">
+            <div class="info-block">
+              <strong>Experiment Tracking</strong>
+              Log every training run: parameters, metrics, model version. Tools: MLflow, Weights &amp; Biases. Enables reproducibility — "what exactly was run #847 that gave us the best F1?"
+            </div>
+            <div class="info-block">
+              <strong>Model Registry</strong>
+              Centralized store of trained models with versioning and lifecycle management. Promotes models through staging → production → archived. Enables instant rollback to previous version.
+            </div>
+            <div class="info-block">
+              <strong>Feature Store</strong>
+              Central repository for computed features, shared across teams. Ensures training and serving use identical feature computations, preventing training-serving skew.
+            </div>
+            <div class="info-block">
+              <strong>CI/CD for ML</strong>
+              Automated pipelines: new data arrives → trigger retraining → run validation suite → if metrics pass → promote to production automatically. New model deployed without human intervention if quality checks pass.
+            </div>
+          </div>
+
+          <div class="warn-block">
+            <div class="block-title">↻ The ML feedback loop</div>
+            Production data → monitoring alerts → new labeled data → retrain → re-evaluate → redeploy → repeat. ML is not a one-time project. A deployed model that isn't monitored and retrained will silently degrade. Build the loop into your system from day one.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- FRONTIER -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="phase" id="p9">
+      <div class="phase-dot" style="color:var(--amber);border-color:rgba(245,158,11,0.4);background:var(--bg);">∞</div>
+      <div class="phase-card" style="border-color:rgba(245,158,11,0.15);border-style:dashed;">
+        <div class="phase-header" onclick="togglePhase('b9','t9')">
+          <div class="phase-icon">🔭</div>
+          <div class="phase-meta">
+            <div class="phase-label">The Frontier</div>
+            <div class="phase-title">
+              <span class="pulse"></span>Still Discovering
+              <span class="frontier-badge" style="color:var(--amber);border-color:rgba(245,158,11,0.4);background:var(--amber-dim);">Active Research</span>
+            </div>
+            <div class="phase-desc">These boundaries are being pushed right now — the map is incomplete by design</div>
+          </div>
+          <div class="phase-toggle" id="t9">▾</div>
+        </div>
+        <div class="phase-body" id="b9">
+          <div class="algo-grid">
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Large Language Models</div>
+              <div class="a-type">Frontier · transformers</div>
+              <div class="a-detail">
+                Transformer-based models with billions of parameters, pre-trained on internet-scale text via next-token prediction. Emergent capabilities: reasoning, code generation, few-shot learning. Open questions: Why do capabilities emerge at scale? How to prevent hallucinations? How to align to human values? How to interpret what the model "knows"?
+                <div class="a-example">📌 GPT-4, Claude 3, Gemini Ultra. Deployed in hundreds of millions of applications.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Diffusion Models</div>
+              <div class="a-type">Frontier · generative</div>
+              <div class="a-detail">
+                Learn to generate data by learning to reverse a gradual noising process. Forward process: add Gaussian noise over T steps until input is pure noise. Reverse process (learned): predict and remove noise step-by-step to reconstruct a sample. Conditioned on text prompts for image generation.
+                <div class="a-example">📌 Stable Diffusion, DALL·E 3, Midjourney. Also applied to molecules (drug discovery), audio, and video generation.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Graph Neural Networks</div>
+              <div class="a-type">Frontier · structured</div>
+              <div class="a-detail">
+                Standard neural networks assume independent samples in a flat vector. GNNs operate on graph-structured data where relationships between entities matter. Message passing: each node aggregates representations from its neighbors over multiple layers.
+                <div class="a-example">📌 AlphaFold 2 (protein structure prediction) uses GNNs over residue interaction graphs. Drug discovery: molecules as graphs, predict binding affinity to target proteins.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Federated Learning</div>
+              <div class="a-type">Frontier · privacy</div>
+              <div class="a-detail">
+                Train across many devices without centralizing raw data. Each device trains locally on its own data, sends only model gradients (not data) to a server, which aggregates them. Protects user privacy. Challenges: heterogeneous data distributions across devices, communication efficiency, adversarial gradient attacks.
+                <div class="a-example">📌 Google Keyboard (Gboard): next-word prediction improved by training on millions of Android devices without Google ever seeing user messages.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Causal ML</div>
+              <div class="a-type">Frontier · causality</div>
+              <div class="a-detail">
+                Standard ML learns correlation. Causal ML learns cause-and-effect relationships. Uses Pearl's do-calculus, structural causal models, and counterfactual reasoning. Critical for policy: "Will this drug reduce mortality?" requires causal inference, not just correlation.
+                <div class="a-example">📌 Measuring true effect of showing an ad on purchase likelihood (correlation is confounded — people who see ads are often already interested in the product). Causal ML disentangles this.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Explainable AI (XAI)</div>
+              <div class="a-type">Frontier · interpretability</div>
+              <div class="a-detail">
+                Methods to open the black box. SHAP (SHapley Additive exPlanations): assigns each feature a fair contribution to a prediction using game theory. LIME: fits a simple interpretable model locally around a specific prediction. Attention visualization: show which input tokens a transformer attends to. Becoming legally required (EU AI Act, GDPR).
+                <div class="a-example">📌 Loan denial: SHAP shows "income was +0.3, but debt-to-income ratio was -0.6 and missed payments were -0.4." Applicant understands exactly why they were denied.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Multimodal Learning</div>
+              <div class="a-type">Frontier · vision-language</div>
+              <div class="a-detail">
+                Models that understand and generate multiple modalities simultaneously: text, images, audio, video, code. Trained with contrastive objectives (CLIP: align image and text embeddings) or generative objectives (GPT-4V, Gemini: predict next token across modalities).
+                <div class="a-example">📌 Medical imaging: model reads patient notes (text) and MRI scan (image) simultaneously to suggest diagnoses. Neither modality alone is sufficient.</div>
+              </div>
+            </div>
+
+            <div class="algo-card" onclick="toggleAlgo(this)">
+              <div class="a-name">Neural Architecture Search</div>
+              <div class="a-type">Frontier · automl</div>
+              <div class="a-detail">
+                Automate the design of neural network architectures using search algorithms: reinforcement learning, evolutionary algorithms, or differentiable search (DARTS). Discovered EfficientNet (outperforms hand-designed ResNet at fraction of compute), MobileNetV3 (optimized for phone inference).
+                <div class="a-example">📌 Google's NAS found an architecture for image classification that a human would never design — asymmetric convolutions, unusual skip connections — yet it outperformed state-of-the-art by 2%.</div>
+              </div>
+            </div>
+
+          </div><!-- end frontier grid -->
+
+          <div style="margin-top:24px;padding:16px 20px;border:1px dashed rgba(245,158,11,0.2);border-radius:10px;text-align:center;">
+            <div style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:0.08em;">
+              // This map is incomplete by design.<br>
+              // Machine learning is still being discovered.<br>
+              // The next breakthrough may not have a name yet.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end timeline -->
+
+</div><!-- end container -->
+
+<div class="footer">
+  ML ROADMAP · BUILT FOR GITHUB PAGES · ALL PHASES · ALL ALGORITHMS
+</div>
+
+<script>
+  // Toggle phase
+  function togglePhase(bodyId, toggleId) {
+    const body = document.getElementById(bodyId);
+    const toggle = document.getElementById(toggleId);
+    body.classList.toggle('open');
+    toggle.classList.toggle('open');
+  }
+
+  // Toggle algo card
+  function toggleAlgo(el) {
+    const others = el.parentElement.querySelectorAll('.algo-card.expanded');
+    others.forEach(o => { if (o !== el) o.classList.remove('expanded'); });
+    el.classList.toggle('expanded');
+  }
+
+  // Scroll-triggered phase reveal
+  const phases = document.querySelectorAll('.phase');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  phases.forEach((p, i) => {
+    p.style.transitionDelay = `${i * 0.04}s`;
+    observer.observe(p);
+  });
+
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    document.getElementById('progress').style.width = pct + '%';
+  });
+
+  // Auto-open first phase
+  window.addEventListener('load', () => {
+    setTimeout(() => togglePhase('b1', 't1'), 500);
+  });
+</script>
+</body>
+</html>
