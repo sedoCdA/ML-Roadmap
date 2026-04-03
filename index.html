@@ -776,7 +776,7 @@
           </div>
 
           <div class="warn-block">
-            <div class="block-title">⚡ Tree-based models (Random Forest, XGBoost) don't need scaling</div>
+            <div class="block-title">Tree-based models (Random Forest, XGBoost) don't need scaling</div>
             They split on thresholds, so the absolute magnitude doesn't matter. Applying scaling to them doesn't hurt but is unnecessary.
           </div>
 
@@ -828,7 +828,7 @@
       <div class="phase-dot" style="color:var(--blue);border-color:rgba(96,165,250,0.4);background:var(--bg);">04</div>
       <div class="phase-card">
         <div class="phase-header" onclick="togglePhase('b4','t4')">
-          <div class="phase-icon">🧠</div>
+          <div class="phase-icon"></div>
           <div class="phase-meta">
             <div class="phase-label">Phase 04 — Algorithms</div>
             <div class="phase-title">Model Selection &amp; Algorithms</div>
@@ -850,7 +850,7 @@
                 <b>Strengths:</b> Extremely interpretable (coefficients = feature importance). Fast to train. Good baseline.<br><br>
                 <b>Weaknesses:</b> Assumes linear relationships. Fails on XOR-type problems or complex decision boundaries.<br><br>
                 <b>When to use:</b> Always as a baseline first. When interpretability is required (finance, medicine). When relationships are approximately linear.
-                <div class="a-example">📌 Example: Credit scoring — each feature (income, age, debt ratio) gets a coefficient. Loan officers can explain why a decision was made.</div>
+                <div class="a-example"> Example: Credit scoring — each feature (income, age, debt ratio) gets a coefficient. Loan officers can explain why a decision was made.</div>
               </div>
             </div>
 
@@ -861,7 +861,7 @@
                 <b>How it works:</b> Recursively splits data by asking yes/no questions on features. Each leaf node holds a prediction. A tree of depth 3 with binary splits = 8 possible outcomes.<br><br>
                 <b>Problem — Overfitting:</b> A deep tree memorizes training data. Given the same 100 training examples, it can grow leaves with just 1 sample each — perfect training accuracy, terrible test accuracy.<br><br>
                 <b>Solutions:</b> max_depth, min_samples_leaf, cost-complexity pruning. Or better: use Random Forest.
-                <div class="a-example">📌 Example: Diagnosing machine failure. "Temperature &gt; 80°C? → Yes → Vibration &gt; 0.5g? → Yes → FAIL." Operators can follow the logic step by step.</div>
+                <div class="a-example"> Example: Diagnosing machine failure. "Temperature &gt; 80°C? → Yes → Vibration &gt; 0.5g? → Yes → FAIL." Operators can follow the logic step by step.</div>
               </div>
             </div>
 
@@ -872,7 +872,7 @@
                 <b>How it works:</b> Builds N decision trees, each trained on a random subset of data (bagging) and a random subset of features. Final prediction = majority vote (classification) or average (regression).<br><br>
                 <b>Why it works:</b> Individual trees overfit in different ways. Averaging them cancels out the noise — the signal remains. This is called variance reduction through ensemble averaging.<br><br>
                 <b>Key hyperparameters:</b> n_estimators (more = better but slower), max_depth, max_features.
-                <div class="a-example">📌 Example: Predicting customer churn. 500 trees each trained on random data subsets — collectively they generalize far better than any single tree and reveal which features matter most.</div>
+                <div class="a-example"> Example: Predicting customer churn. 500 trees each trained on random data subsets — collectively they generalize far better than any single tree and reveal which features matter most.</div>
               </div>
             </div>
 
@@ -883,7 +883,7 @@
                 <b>How it works:</b> Builds trees sequentially. Each new tree focuses specifically on the errors (residuals) of the previous trees. Final prediction = sum of all trees weighted by a learning rate.<br><br>
                 <b>Why it's powerful:</b> Systematic error reduction. State-of-the-art on tabular data. Wins most Kaggle competitions.<br><br>
                 <b>Key regularization params:</b> learning_rate (lower = better but needs more trees), max_depth, subsample, reg_lambda (L2), reg_alpha (L1).
-                <div class="a-example">📌 Example: Insurance claim prediction. XGBoost with 1000 trees, each correcting prior mistakes. Tuned with Bayesian search over learning_rate, max_depth, and subsample.</div>
+                <div class="a-example"> Example: Insurance claim prediction. XGBoost with 1000 trees, each correcting prior mistakes. Tuned with Bayesian search over learning_rate, max_depth, and subsample.</div>
               </div>
             </div>
 
@@ -894,7 +894,7 @@
                 <b>How it works:</b> Finds the hyperplane that maximizes the margin between classes. Only the boundary data points (support vectors) matter. Kernel trick maps data to higher dimensions to find non-linear boundaries.<br><br>
                 <b>Kernels:</b> Linear (fast, for linearly separable data), RBF (most common, handles non-linear), Polynomial (degree=3 etc.).<br><br>
                 <b>Problem:</b> Scales poorly — O(n²) to O(n³). Not recommended for datasets &gt; 100k rows.
-                <div class="a-example">📌 Example: Text classification with TF-IDF features. SVM with linear kernel handles high-dimensional sparse text data excellently — often beats neural networks on small datasets.</div>
+                <div class="a-example"> Example: Text classification with TF-IDF features. SVM with linear kernel handles high-dimensional sparse text data excellently — often beats neural networks on small datasets.</div>
               </div>
             </div>
 
@@ -904,7 +904,7 @@
               <div class="a-detail">
                 <b>How it works:</b> No training phase. At inference, finds K closest training points (by Euclidean distance or others) and returns their majority vote or average. K=1: memorizes training data. K=N: always predicts the mean.<br><br>
                 <b>Problems:</b> Very slow at inference (scans all training points). Sensitive to irrelevant features and scale — always standardize first. Curse of dimensionality: distance becomes meaningless in very high dimensions.
-                <div class="a-example">📌 Example: Recommender system — "users who bought these 5 items also bought..." The 10 most similar users (nearest neighbors) form the recommendation pool.</div>
+                <div class="a-example"> Example: Recommender system — "users who bought these 5 items also bought..." The 10 most similar users (nearest neighbors) form the recommendation pool.</div>
               </div>
             </div>
 
@@ -915,7 +915,7 @@
                 <b>How it works:</b> Layers of neurons (linear transformation + activation function). Forward pass computes predictions. Backward pass (backpropagation) computes gradients and updates weights via gradient descent.<br><br>
                 <b>Universal approximation:</b> Given enough neurons, can approximate any function. But needs lots of data to not overfit.<br><br>
                 <b>Subtypes:</b> CNN (images — uses convolving filters to detect edges, shapes) · RNN/LSTM (sequences — maintains hidden state across time steps) · Transformer (attention mechanism — parallelizable, current SOTA for NLP and vision)
-                <div class="a-example">📌 Example: ResNet-50 classifies 1000 ImageNet categories with 95%+ accuracy using 50 layers. Each layer learns progressively abstract features: edges → shapes → parts → objects.</div>
+                <div class="a-example"> Example: ResNet-50 classifies 1000 ImageNet categories with 95%+ accuracy using 50 layers. Each layer learns progressively abstract features: edges → shapes → parts → objects.</div>
               </div>
             </div>
 
@@ -925,7 +925,7 @@
               <div class="a-detail">
                 <b>How it works:</b> Applies Bayes' theorem — P(class|features) ∝ P(features|class) × P(class). "Naive" because it assumes features are independent of each other (rarely true, but works surprisingly well).<br><br>
                 <b>Strengths:</b> Extremely fast. Works well with very little data. Excels on text (multinomial Naive Bayes counts word frequencies).
-                <div class="a-example">📌 Example: Email spam filter. P(spam | "free money now") = P("free"|spam) × P("money"|spam) × P("now"|spam) × P(spam). Each word contributes independently. Trained on 10,000 emails in milliseconds.</div>
+                <div class="a-example"> Example: Email spam filter. P(spam | "free money now") = P("free"|spam) × P("money"|spam) × P("now"|spam) × P(spam). Each word contributes independently. Trained on 10,000 emails in milliseconds.</div>
               </div>
             </div>
 
@@ -941,7 +941,7 @@
                 <b>How it works:</b> Assigns each point to 1 of K clusters by minimizing within-cluster sum of squared distances to the centroid. Iterates: reassign points → recompute centroids → repeat until convergence.<br><br>
                 <b>Choosing K:</b> Elbow method: plot inertia vs K, find the "elbow." Silhouette score: measures how similar a point is to its cluster vs others.<br><br>
                 <b>Problems:</b> Assumes spherical clusters of similar size. Sensitive to outliers and initialization (use k-means++ for better init).
-                <div class="a-example">📌 Example: Segmenting 10M customers into 5 groups by purchase behavior. Group 1: high-frequency low-value. Group 2: low-frequency high-value (VIPs). Group 3: churned. Different marketing strategies for each.</div>
+                <div class="a-example"> Example: Segmenting 10M customers into 5 groups by purchase behavior. Group 1: high-frequency low-value. Group 2: low-frequency high-value (VIPs). Group 3: churned. Different marketing strategies for each.</div>
               </div>
             </div>
 
@@ -952,7 +952,7 @@
                 <b>How it works:</b> A point is a "core point" if at least min_samples neighbors lie within radius ε. Connected core points form a cluster. Points not in any cluster = outliers (noise).<br><br>
                 <b>Strengths:</b> Finds clusters of arbitrary shape (not just spherical). Automatically detects outliers. Doesn't require specifying K.<br><br>
                 <b>Weakness:</b> Struggles with varying density. Two params (ε, min_samples) hard to tune.
-                <div class="a-example">📌 Example: Detecting GPS anomalies in logistics. Normal routes form dense clusters. A truck detouring through an unauthorized area = noise point = flagged for review.</div>
+                <div class="a-example"> Example: Detecting GPS anomalies in logistics. Normal routes form dense clusters. A truck detouring through an unauthorized area = noise point = flagged for review.</div>
               </div>
             </div>
 
@@ -963,7 +963,7 @@
                 <b>How it works:</b> Finds the directions (principal components) of maximum variance in the data. Projects data onto these axes, ranked by explained variance. First component explains most variance.<br><br>
                 <b>Use cases:</b> Visualization (reduce to 2D), noise reduction, remove correlated features before training, speed up training.<br><br>
                 <b>Limitation:</b> Linear only. t-SNE and UMAP handle non-linear structure better (but are too slow for large datasets).
-                <div class="a-example">📌 Example: Gene expression data with 20,000 genes per patient. PCA reduces to 50 components explaining 90% of variance. SVM trained on 50 PCA features beats SVM on 20,000 raw features.</div>
+                <div class="a-example"> Example: Gene expression data with 20,000 genes per patient. PCA reduces to 50 components explaining 90% of variance. SVM trained on 50 PCA features beats SVM on 20,000 raw features.</div>
               </div>
             </div>
 
@@ -974,7 +974,7 @@
                 <b>How it works:</b> Encoder compresses input to a small latent vector z. Decoder reconstructs the original input from z. Trained to minimize reconstruction error.<br><br>
                 <b>Anomaly detection:</b> Train on normal data. At inference, anomalous inputs have high reconstruction error — the model "can't reconstruct what it hasn't seen."<br><br>
                 <b>Variants:</b> Variational Autoencoder (VAE) learns a probability distribution in latent space — can generate new samples.
-                <div class="a-example">📌 Example: Network intrusion detection. Autoencoder trained on normal traffic. Attack traffic has high reconstruction error — flagged as anomaly. Works without labeled attack examples.</div>
+                <div class="a-example"> Example: Network intrusion detection. Autoencoder trained on normal traffic. Attack traffic has high reconstruction error — flagged as anomaly. Works without labeled attack examples.</div>
               </div>
             </div>
 
@@ -984,7 +984,7 @@
               <div class="a-detail">
                 <b>How it works:</b> Models data as a mixture of K Gaussian distributions. Uses Expectation-Maximization (EM) to fit. Unlike K-Means, assigns soft probabilities — a point can be 70% cluster 1 and 30% cluster 2.<br><br>
                 <b>Advantage over K-Means:</b> Handles elliptical clusters (not just spherical). Probability-weighted membership is more realistic.
-                <div class="a-example">📌 Example: Modeling financial returns. Market regimes (bull/bear/sideways) aren't crisp — a month might be 60% "normal" and 40% "high volatility." GMM captures this ambiguity where K-Means cannot.</div>
+                <div class="a-example"> Example: Modeling financial returns. Market regimes (bull/bear/sideways) aren't crisp — a month might be 60% "normal" and 40% "high volatility." GMM captures this ambiguity where K-Means cannot.</div>
               </div>
             </div>
 
@@ -994,7 +994,7 @@
               <div class="a-detail">
                 <b>How it works:</b> Non-linear dimensionality reduction designed for visualization. Preserves local neighborhood structure — nearby points in high-dim space stay nearby in 2D. UMAP is faster and better at preserving global structure.<br><br>
                 <b>Important:</b> Do NOT use t-SNE/UMAP outputs as features for training — distances are not meaningful. Use only for visualization.
-                <div class="a-example">📌 Example: Visualizing 768-dimensional BERT embeddings of 50,000 news articles. t-SNE projects to 2D — sports, politics, tech, and science form visually distinct clusters, validating the embedding quality.</div>
+                <div class="a-example"> Example: Visualizing 768-dimensional BERT embeddings of 50,000 news articles. t-SNE projects to 2D — sports, politics, tech, and science form visually distinct clusters, validating the embedding quality.</div>
               </div>
             </div>
 
@@ -1011,7 +1011,7 @@
       <div class="phase-dot" style="color:var(--red);border-color:rgba(248,113,113,0.4);background:var(--bg);">05</div>
       <div class="phase-card">
         <div class="phase-header" onclick="togglePhase('b5','t5')">
-          <div class="phase-icon">⚡</div>
+          <div class="phase-icon"></div>
           <div class="phase-meta">
             <div class="phase-label">Phase 05 — Training</div>
             <div class="phase-title">Training, Bias-Variance &amp; Regularization</div>
@@ -1032,13 +1032,13 @@
 
           <div class="two-col">
             <div class="error-block">
-              <div class="block-title">🔴 Underfitting (High Bias)</div>
+              <div class="block-title"> Underfitting (High Bias)</div>
               Model is too simple to capture the pattern. Signs: high training error AND high validation error. Both errors are large. The learning curves plateau high and close together.
               <br><br>
               Causes: Too few features · Model complexity too low · Regularization too strong · Too few training epochs
             </div>
             <div class="error-block">
-              <div class="block-title">🔴 Overfitting (High Variance)</div>
+              <div class="block-title"> Overfitting (High Variance)</div>
               Model memorizes training data, fails to generalize. Signs: very low training error, but high validation error. A large gap between the two curves.
               <br><br>
               Causes: Too many features · Model too complex · Too little data · No regularization · Training too long
@@ -1090,7 +1090,7 @@
           </div>
 
           <div class="warn-block">
-            <div class="block-title">⚡ Generalization — the only metric that matters in production</div>
+            <div class="block-title"> Generalization — the only metric that matters in production</div>
             A model that gets 99% on training data but 65% on new data is worthless. Generalization = performance on unseen data from the same distribution. Achieved through: sufficient diverse training data, proper regularization, appropriate model complexity, and honest evaluation on a truly held-out test set.
           </div>
         </div>
@@ -1115,7 +1115,7 @@
         <div class="phase-body" id="b6">
 
           <div class="warn-block">
-            <div class="block-title">⚡ Accuracy is almost always the wrong metric</div>
+            <div class="block-title"> Accuracy is almost always the wrong metric</div>
             If 99% of transactions are legitimate, a model predicting "not fraud" for everything has 99% accuracy. It catches zero fraud. Always choose metrics aligned with your actual business problem.
           </div>
 
@@ -1237,7 +1237,7 @@
       <div class="phase-dot" style="color:var(--blue);border-color:rgba(96,165,250,0.4);background:var(--bg);">08</div>
       <div class="phase-card">
         <div class="phase-header" onclick="togglePhase('b8','t8')">
-          <div class="phase-icon">🚀</div>
+          <div class="phase-icon"></div>
           <div class="phase-meta">
             <div class="phase-label">Phase 08 — Production</div>
             <div class="phase-title">Deployment &amp; Monitoring</div>
@@ -1326,7 +1326,7 @@
               <div class="a-type">Frontier · transformers</div>
               <div class="a-detail">
                 Transformer-based models with billions of parameters, pre-trained on internet-scale text via next-token prediction. Emergent capabilities: reasoning, code generation, few-shot learning. Open questions: Why do capabilities emerge at scale? How to prevent hallucinations? How to align to human values? How to interpret what the model "knows"?
-                <div class="a-example">📌 GPT-4, Claude 3, Gemini Ultra. Deployed in hundreds of millions of applications.</div>
+                <div class="a-example"> GPT-4, Claude 3, Gemini Ultra. Deployed in hundreds of millions of applications.</div>
               </div>
             </div>
 
@@ -1335,7 +1335,7 @@
               <div class="a-type">Frontier · generative</div>
               <div class="a-detail">
                 Learn to generate data by learning to reverse a gradual noising process. Forward process: add Gaussian noise over T steps until input is pure noise. Reverse process (learned): predict and remove noise step-by-step to reconstruct a sample. Conditioned on text prompts for image generation.
-                <div class="a-example">📌 Stable Diffusion, DALL·E 3, Midjourney. Also applied to molecules (drug discovery), audio, and video generation.</div>
+                <div class="a-example"> Stable Diffusion, DALL·E 3, Midjourney. Also applied to molecules (drug discovery), audio, and video generation.</div>
               </div>
             </div>
 
@@ -1344,7 +1344,7 @@
               <div class="a-type">Frontier · structured</div>
               <div class="a-detail">
                 Standard neural networks assume independent samples in a flat vector. GNNs operate on graph-structured data where relationships between entities matter. Message passing: each node aggregates representations from its neighbors over multiple layers.
-                <div class="a-example">📌 AlphaFold 2 (protein structure prediction) uses GNNs over residue interaction graphs. Drug discovery: molecules as graphs, predict binding affinity to target proteins.</div>
+                <div class="a-example"> AlphaFold 2 (protein structure prediction) uses GNNs over residue interaction graphs. Drug discovery: molecules as graphs, predict binding affinity to target proteins.</div>
               </div>
             </div>
 
@@ -1353,7 +1353,7 @@
               <div class="a-type">Frontier · privacy</div>
               <div class="a-detail">
                 Train across many devices without centralizing raw data. Each device trains locally on its own data, sends only model gradients (not data) to a server, which aggregates them. Protects user privacy. Challenges: heterogeneous data distributions across devices, communication efficiency, adversarial gradient attacks.
-                <div class="a-example">📌 Google Keyboard (Gboard): next-word prediction improved by training on millions of Android devices without Google ever seeing user messages.</div>
+                <div class="a-example"> Google Keyboard (Gboard): next-word prediction improved by training on millions of Android devices without Google ever seeing user messages.</div>
               </div>
             </div>
 
@@ -1362,7 +1362,7 @@
               <div class="a-type">Frontier · causality</div>
               <div class="a-detail">
                 Standard ML learns correlation. Causal ML learns cause-and-effect relationships. Uses Pearl's do-calculus, structural causal models, and counterfactual reasoning. Critical for policy: "Will this drug reduce mortality?" requires causal inference, not just correlation.
-                <div class="a-example">📌 Measuring true effect of showing an ad on purchase likelihood (correlation is confounded — people who see ads are often already interested in the product). Causal ML disentangles this.</div>
+                <div class="a-example"> Measuring true effect of showing an ad on purchase likelihood (correlation is confounded — people who see ads are often already interested in the product). Causal ML disentangles this.</div>
               </div>
             </div>
 
@@ -1371,7 +1371,7 @@
               <div class="a-type">Frontier · interpretability</div>
               <div class="a-detail">
                 Methods to open the black box. SHAP (SHapley Additive exPlanations): assigns each feature a fair contribution to a prediction using game theory. LIME: fits a simple interpretable model locally around a specific prediction. Attention visualization: show which input tokens a transformer attends to. Becoming legally required (EU AI Act, GDPR).
-                <div class="a-example">📌 Loan denial: SHAP shows "income was +0.3, but debt-to-income ratio was -0.6 and missed payments were -0.4." Applicant understands exactly why they were denied.</div>
+                <div class="a-example"> Loan denial: SHAP shows "income was +0.3, but debt-to-income ratio was -0.6 and missed payments were -0.4." Applicant understands exactly why they were denied.</div>
               </div>
             </div>
 
@@ -1380,7 +1380,7 @@
               <div class="a-type">Frontier · vision-language</div>
               <div class="a-detail">
                 Models that understand and generate multiple modalities simultaneously: text, images, audio, video, code. Trained with contrastive objectives (CLIP: align image and text embeddings) or generative objectives (GPT-4V, Gemini: predict next token across modalities).
-                <div class="a-example">📌 Medical imaging: model reads patient notes (text) and MRI scan (image) simultaneously to suggest diagnoses. Neither modality alone is sufficient.</div>
+                <div class="a-example"> Medical imaging: model reads patient notes (text) and MRI scan (image) simultaneously to suggest diagnoses. Neither modality alone is sufficient.</div>
               </div>
             </div>
 
@@ -1389,7 +1389,7 @@
               <div class="a-type">Frontier · automl</div>
               <div class="a-detail">
                 Automate the design of neural network architectures using search algorithms: reinforcement learning, evolutionary algorithms, or differentiable search (DARTS). Discovered EfficientNet (outperforms hand-designed ResNet at fraction of compute), MobileNetV3 (optimized for phone inference).
-                <div class="a-example">📌 Google's NAS found an architecture for image classification that a human would never design — asymmetric convolutions, unusual skip connections — yet it outperformed state-of-the-art by 2%.</div>
+                <div class="a-example"> Google's NAS found an architecture for image classification that a human would never design — asymmetric convolutions, unusual skip connections — yet it outperformed state-of-the-art by 2%.</div>
               </div>
             </div>
 
